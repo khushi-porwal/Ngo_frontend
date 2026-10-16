@@ -7,7 +7,7 @@ import CausesSection from "../components/home/CausesSection";
 import SuccessStories from "../components/home/SuccessStories";
 import WhyChooseUs from "../components/home/WhyChooseUs";
 import Footer from "../components/layout/Footer";
-
+import OurImpact from "../components/home/OurImpact"
 function Home() {
   return (
     <>
@@ -16,7 +16,7 @@ function Home() {
       <main>
         <Hero />
         <CampaignSection />
-
+         <OurImpact />
         <HowItWorks />
 
          <CausesSection />
