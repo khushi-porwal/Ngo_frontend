@@ -48,27 +48,36 @@ const impactAreas = [
   },
 ];
 
-// Demo values only. Replace with verified organisation data
-// before publishing these statistics.
-const impactStats = [
-  { target: 2500, label: "Patients Supported", icon: "♡" },
+// Demo values only. Replace with verified figures before publishing.
+const floatingStats = [
+  {
+    target: 2500,
+    label: "Patients Supported",
+    icon: "♡",
+    position: "stat-left-bottom",
+  },
   {
     target: 1800,
     label: "Healthcare Guidance Sessions",
     icon: "✚",
+    position: "stat-right-top",
   },
-  { target: 950, label: "Care Coordination Cases", icon: "↗" },
-  { target: 700, label: "Patient Assistance Cases", icon: "♧" },
+  {
+    target: 950,
+    label: "Care Coordination Cases",
+    icon: "↗",
+    position: "stat-right-bottom",
+  },
 ];
 
-function ImpactCounter({ target, label, icon }) {
+function ImpactCounter({ target, label, icon, position }) {
   const [count, setCount] = useState(0);
   const [started, setStarted] = useState(false);
   const counterRef = useRef(null);
 
+  // Start counting when the card enters the viewport.
   useEffect(() => {
     const element = counterRef.current;
-
     if (!element) return;
 
     const observer = new IntersectionObserver(
@@ -86,6 +95,7 @@ function ImpactCounter({ target, label, icon }) {
     return () => observer.disconnect();
   }, []);
 
+  // Existing smooth 2-second number animation.
   useEffect(() => {
     if (!started) return;
 
@@ -120,13 +130,18 @@ function ImpactCounter({ target, label, icon }) {
   }, [started, target]);
 
   return (
-    <article className="impact-stat" ref={counterRef}>
-      <span className="impact-stat-icon" aria-hidden="true">
+    <article
+      className={`impact-floating-stat ${position}`}
+      ref={counterRef}
+    >
+      <div className="floating-stat-icon" aria-hidden="true">
         {icon}
-      </span>
+      </div>
 
-      <h3>{count.toLocaleString("en-IN")}+</h3>
-      <p>{label}</p>
+      <div className="floating-stat-content">
+        <h3>{count.toLocaleString("en-IN")}+</h3>
+        <p>{label}</p>
+      </div>
     </article>
   );
 }
@@ -159,7 +174,7 @@ function OurImpact() {
           </p>
         </div>
 
-        {/* Image slideshow and information cards */}
+        {/* Image slideshow and floating number cards */}
         <div className="impact-content">
           <div className="impact-image">
             {patientImages.map((image, index) => (
@@ -174,20 +189,16 @@ function OurImpact() {
               />
             ))}
 
-            {/* Floating card inspired by the reference image */}
-            <div className="impact-floating-card">
-              <div className="impact-floating-icon">
-                <span aria-hidden="true">♡</span>
-              </div>
-
-              <div className="impact-floating-content">
-                <h3>Care Before Cure</h3>
-                <p>
-                  Compassionate support throughout your healthcare
-                  journey.
-                </p>
-              </div>
-            </div>
+            {/* Three animated floating statistic rectangles */}
+            {floatingStats.map((stat) => (
+              <ImpactCounter
+                key={stat.label}
+                target={stat.target}
+                label={stat.label}
+                icon={stat.icon}
+                position={stat.position}
+              />
+            ))}
 
             <div className="impact-image-overlay">
               <span>COMPASSIONATE CARE</span>
@@ -210,6 +221,7 @@ function OurImpact() {
             </div>
           </div>
 
+          {/* Existing information cards remain unchanged */}
           <div className="impact-cards">
             {impactAreas.map((item, index) => (
               <article
@@ -228,29 +240,7 @@ function OurImpact() {
           </div>
         </div>
 
-        {/* Animated statistics */}
-        <div className="impact-stats">
-          <div className="impact-stats-heading">
-            <span>OUR IMPACT AT A GLANCE</span>
-            <h3>Every Step Makes a Difference</h3>
-            <p>
-              Behind every number is a journey that deserves care.
-            </p>
-          </div>
-
-          <div className="impact-stats-grid">
-            {impactStats.map((stat) => (
-              <ImpactCounter
-                key={stat.label}
-                target={stat.target}
-                label={stat.label}
-                icon={stat.icon}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Patient support call to action */}
+        {/* Patient support CTA */}
         <div className="impact-cta">
           <div>
             <span className="impact-cta-label">
