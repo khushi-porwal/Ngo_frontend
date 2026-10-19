@@ -48,10 +48,15 @@ const impactAreas = [
   },
 ];
 
-// Demo values only: replace with verified organisation data before publishing.
+// Demo values only. Replace with verified organisation data
+// before publishing these statistics.
 const impactStats = [
   { target: 2500, label: "Patients Supported", icon: "♡" },
-  { target: 1800, label: "Healthcare Guidance Sessions", icon: "✚" },
+  {
+    target: 1800,
+    label: "Healthcare Guidance Sessions",
+    icon: "✚",
+  },
   { target: 950, label: "Care Coordination Cases", icon: "↗" },
   { target: 700, label: "Patient Assistance Cases", icon: "♧" },
 ];
@@ -63,6 +68,7 @@ function ImpactCounter({ target, label, icon }) {
 
   useEffect(() => {
     const element = counterRef.current;
+
     if (!element) return;
 
     const observer = new IntersectionObserver(
@@ -88,7 +94,9 @@ function ImpactCounter({ target, label, icon }) {
     const duration = 2000;
 
     function animate(timestamp) {
-      if (startTime === null) startTime = timestamp;
+      if (startTime === null) {
+        startTime = timestamp;
+      }
 
       const progress = Math.min(
         (timestamp - startTime) / duration,
@@ -96,6 +104,7 @@ function ImpactCounter({ target, label, icon }) {
       );
 
       const easedProgress = 1 - Math.pow(1 - progress, 4);
+
       setCount(Math.floor(easedProgress * target));
 
       if (progress < 1) {
@@ -164,6 +173,21 @@ function OurImpact() {
                 aria-hidden={activeImage !== index}
               />
             ))}
+
+            {/* Floating card inspired by the reference image */}
+            <div className="impact-floating-card">
+              <div className="impact-floating-icon">
+                <span aria-hidden="true">♡</span>
+              </div>
+
+              <div className="impact-floating-content">
+                <h3>Care Before Cure</h3>
+                <p>
+                  Compassionate support throughout your healthcare
+                  journey.
+                </p>
+              </div>
+            </div>
 
             <div className="impact-image-overlay">
               <span>COMPASSIONATE CARE</span>
@@ -235,7 +259,9 @@ function OurImpact() {
             <p>Need help navigating your healthcare journey?</p>
           </div>
 
-          <a href="#contact">Get Patient Support <span>→</span></a>
+          <a href="#contact">
+            Get Patient Support <span>→</span>
+          </a>
         </div>
       </div>
     </section>

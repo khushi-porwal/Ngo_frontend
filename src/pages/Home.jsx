@@ -7,7 +7,9 @@ import CausesSection from "../components/home/CausesSection";
 import SuccessStories from "../components/home/SuccessStories";
 import WhyChooseUs from "../components/home/WhyChooseUs";
 import Footer from "../components/layout/Footer";
+import GetInvolved from "../components/home/GetInvolved";
 import OurImpact from "../components/home/OurImpact"
+import DonateSection from "../components/home/DonateSection";
 function Home() {
   return (
     <>
@@ -22,8 +24,10 @@ function Home() {
          <CausesSection />
 
          <SuccessStories />
+          <GetInvolved/>
          <WhyChooseUs />
-       
+
+         <DonateSection/>
       </main>
 
        <Footer />
